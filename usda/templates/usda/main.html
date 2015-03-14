@@ -1,0 +1,35 @@
+{% extends "usda/bbase.html" %}
+
+{% block content %}
+	<div class="main">
+		<form action='/usda' method='get'>
+			{% for field in form %}
+				<div class="field">
+					{{ field.label_tag }} {{ field }}
+				</div>
+			{% endfor %}
+			<input type="submit" value="Submit" />
+		</form>
+		<!-- Food -->
+		<table border="1">
+			<tr>
+				<th>Code</th>
+				<th>Description</th>
+				<th>Food group</th>
+			</tr>
+			{% for f in food.object_list %}
+				<tr>
+					<td> {{ f.nbd_no }} </td>
+					<td>
+					<div class="food">
+						<a href="{{ f.get_absolute_url }}">{{ f.long_desc}}</a>
+					</div>
+					</td>
+					<td> {{f.food_group.name}}</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+		{% include "usda/page.html" with obj=food url=url %}
+    </div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "usda/bbase.html" %}
+{% load static from staticfiles %}
+<style>
+   table, th, td { border: 1px solid black; }
+</style>
+
+{% block content %}
+	<div class="main">
+		<div class="long">{{ food.long_desc }}</div>
+		<h3>Food group</h3> <div class="long">{{ food.food_group.name }}</div>
+		<h1>Nutrients</h1>
+		<div class="nutrients">
+			<table border=1>
+				<tr>
+					<th>Nutrient</th>
+					<th>Value per 100g</th>
+					<th>DV% per 100g</th>
+					{% for w in weights %}
+						<th>
+							{{ w.amount }} {{ w.description }}
+							{{ w.weight }}g
+						</th>
+						<th>DV% per {{ w.weight }}g</th>
+					{% endfor %}
+					<th>Added</th>
+					<th>Footnotes</th>
+					<th>Datasources</th>
+				</tr>
+				{% for n in nutrient_data %}
+					<tr>
+					<div class="nutrient">
+						<td>{{ n.nutrient.nutrient.name }}</td>
+						{% for w in n.weight_data %}
+							<td>{{ w.amount }} {{ n.nutrient.nutrient.units }}</td>
+							{% if w.daily_value %}
+								<td>{{ w.daily_value }}%</td>
+							{% else %}
+								<td></td>
+							{% endif %}
+						{% endfor %}
+
+						{% if n.nutrient.added_nutrition  %}
+							<td>&#10004;</td>
+						{% else %}
+							<td></td>
+						{% endif %}
+						{% if n.footnotes %}
+							<td>
+							{% for data in n.footnotes %}
+								{{ data.text }},
+							{% endfor %}
+							</td>
+						{% else %}
+							<td></td>
+						{% endif %}
+						{% if n.datasourcelinks %}
+							<td>
+							{% for data in n.datasourcelinks %}
+								{{ data.data_source.title }},
+							{% endfor %}
+							</td>
+						{% else %}
+							<td></td>
+						{% endif %}
+					</div>
+					</tr>
+				{% endfor %}
+				<tr>
+			</table>
+		</div>
+{% endblock %}

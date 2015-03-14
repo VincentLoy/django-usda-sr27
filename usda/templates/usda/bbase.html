@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>{% block title %}USDA Database{% endblock %}</title>
+	<!-- <meta http-equiv="refresh" content="2">  -->
+	<meta name="keywords" content="{% block keywords %}USDA SR27 nutritio{% endblock %}">
+	<link rel="stylesheet" href="{% static "usda/base.css" %}" type="text/css" media="screen" charset="utf-8" />
+</head>
+
+<body>
+	<div id="container">
+		<div id="header">
+			<div id="branding">
+				{% block branding %}
+					<h1 id="site-name"><a href="{% url 'usda:main' %}">Vagabond Coder USDA database</a></h1>
+				{% endblock %}
+			</div>
+			<div id="user-tools">
+				{% block user-nav %}
+					<a href="https://github.com/vagabondcoder">Github</a>
+				{% endblock %}
+			</div>
+		</div>
+		{% block messages %}
+			{% if messages %}
+				<ul class="messagelist">
+					{% for message in messages %}
+						<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		{% endblock messages %}
+
+		<br>
+		<div id="content" class="{% block coltype %}colM{% endblock %}">
+			{% block content %}{% endblock %}
+		</div>
+		{% block footer %}<div id="footer"></div>{% endblock %}
+	</div>
+</body>
+</html>
+
