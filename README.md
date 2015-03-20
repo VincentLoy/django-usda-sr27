@@ -28,4 +28,4 @@ import individual tables into the database. For a complete list of options, try:
 
     ./manage.py load_sr27 --help
 
-You can sample it on a [live site](http://www.vagabondcoder/usda)
+You can sample it on a [live site](http://www.vagabondcoder.com/usda)
